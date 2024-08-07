@@ -21,3 +21,7 @@ env/
 # OS generated files
 .DS_Store
 Thumbs.db
+
+# Other stuff
+bot.session
+*.session
