@@ -1,0 +1,196 @@
+outline_task:
+  description: |
+    Create a comprehensive and structured outline for the research on {topic}.
+    1. Begin with a concise yet informative abstract summarizing the entire research.
+    2. Develop an introduction section that includes:
+       - A brief overview capturing the essence of the topic
+       - Key points to be covered throughout the research
+       - Relevant background information and context
+       - A clear and focused problem statement or research question
+       - Well-defined research objectives and aims
+    3. Plan main body sections with:
+       - Logical and sequential titles that flow naturally
+       - Detailed breakdowns of what each section will cover
+       - Supporting subpoints and potential evidence for each main point
+    4. Outline a conclusion that includes:
+       - A summary of key findings and their significance
+       - Implications of the research for the field or broader context
+       - Suggestions for future work or areas of further inquiry
+    5. Ensure the outline maintains a coherent structure and clear progression of ideas.
+    6. Consider potential counterarguments or alternative viewpoints to address.
+
+initial_research_task:
+  description: |
+    Conduct thorough initial research on {topic}, focusing on laying a strong foundation for the study.
+    1. Carefully review and adhere to the outline provided by the Outline Concepter.
+    2. Begin populating the Research model, with primary focus on:
+       - Crafting a compelling and informative abstract
+       - Developing a comprehensive introduction that contextualizes the research, using appropriate in-text citations if necessary (e.g., Brown, 2021)
+       - Initiating the main body sections, particularly the earlier ones, ensuring any claims are supported by a citation if necessary (Smith & Jones, 2022)
+    3. Conduct a preliminary literature review to:
+       - Identify seminal works and recent, relevant studies in the field, citing them appropriately (e.g., Johnson et al., 2023)
+       - Understand the current state of knowledge on the topic, referencing key studies
+       - Recognize gaps or controversies in existing research, citing conflicting viewpoints (e.g., Davis, 2020; Wilson, 2021)
+    4. Gather and document credible references, ensuring a mix of:
+       - Peer-reviewed journal articles
+       - Reputable books or book chapters
+       - Relevant conference proceedings
+       - Authoritative reports or official documents, if applicable
+    5. Synthesize information to support key points in the outline, ensuring proper APA 7th edition in-text citation for each piece of information (e.g., "According to Thompson (2019), ...")
+    6. Identify potential methodologies or theoretical frameworks relevant to the research, citing foundational works in these areas.
+    7. Note any emerging themes or patterns in the literature that might inform later sections, providing citations for each theme.
+    8. Flag areas that may require more in-depth investigation by the Main Researcher, including preliminary citations for these areas.
+    9. Create a comprehensive reference list in APA 7th edition format for all sources cited in the text.
+    10. Ensure every in-text citation has a corresponding entry in the reference list and vice versa.
+    11. Review the document for consistency in citation style and formatting throughout.
+
+case_study_task:
+  description: |
+    Conduct a comprehensive case study related to {topic}, integrating it with the main research to provide real-world context and insights.
+    1. Review the partially completed Research model as given by the Initial Researcher to identify areas where a case study could provide valuable insights.
+    2. Select an appropriate case that aligns with the research objectives:
+       - Choose a case that exemplifies key aspects of the research topic
+       - Ensure the case offers sufficient depth and complexity for meaningful analysis
+    3. Gather and analyze data for the selected case:
+       - Collect relevant documents, reports, and data
+       - Conduct interviews or surveys if applicable and possible
+       - Analyze the collected information using appropriate qualitative or quantitative methods
+    4. Structure the case study following the CaseStudy Pydantic model:
+       - Provide a clear and concise title
+       - Write a comprehensive background section with proper in-text citations (e.g., Smith, 2020)
+       - Clearly state the problem or challenge addressed in the case
+       - List the objectives of the case study
+       - Describe the methodology used, citing relevant methodological sources (e.g., Yin, 2018)
+       - Detail the data collection methods
+       - Present key findings with supporting evidence and appropriate citations
+       - Conduct in-depth analysis of the findings, referencing relevant theories or models (e.g., Johnson & Smith, 2019)
+       - Develop actionable recommendations based on the analysis
+       - Discuss any limitations of the case study
+       - Formulate a strong conclusion that ties back to the main research topic
+    5. Integrate the case study findings with the main research:
+       - Identify how the case study supports or challenges the main research findings, citing relevant sources
+       - Highlight any unique insights gained from the real-world application
+       - Discuss how the case study contributes to the broader understanding of the topic
+    6. Ensure all claims in the case study are well-supported by evidence and properly cited using APA 7th edition format.
+    7. Create a comprehensive reference list for the case study, formatted in APA 7th edition style.
+    8. Review the case study for coherence, alignment with the main research objectives, and consistency in citation style.
+    9. Prepare a summary of key case study findings for easy integration into the main research document, including relevant citations.
+    10. Collaborate with the Main Researcher to determine the best placement and integration of the case study within the overall research structure.
+    11. Double-check that every in-text citation has a corresponding entry in the reference list and vice versa.
+
+reference_checker_task:
+  description: |
+    Combine and verify references from the initial research and case study, ensuring accuracy, consistency, and proper formatting throughout the research document.
+    1. Review the outputs from the Initial Researcher and Case Study Specialist:
+       - Examine the research_reference from the Initial Researcher's output
+       - Examine the case_study_reference from the Case Study Specialist's output
+    2. Merge the reference lists:
+       - Combine research_reference and case_study_reference into a single list
+       - Identify and remove any duplicate entries, keeping the most complete version
+       - Alphabetize the combined list according to APA 7th edition guidelines
+    3. Verify and standardize reference formatting:
+       - Ensure all references adhere to APA 7th edition format
+       - Check for consistency in formatting across all entries (e.g., capitalization, italics, punctuation)
+       - Verify that all required information is present for each reference type (e.g., DOIs for journal articles)
+    4. Cross-check in-text citations:
+       - Review the main research document and case study for all in-text citations
+       - Ensure each in-text citation has a corresponding entry in the combined reference list
+       - Flag any in-text citations that do not have a matching reference for further investigation
+    5. Verify reference list completeness:
+       - Check that every entry in the combined reference list is cited in either the main research or case study
+       - Flag any references not cited in the text for potential removal or inclusion
+    6. Handle special cases:
+       - Address any references to personal communications, ensuring they are properly cited in-text but not included in the reference list
+       - Verify the formatting of any non-standard reference types (e.g., social media posts, software, datasets)
+    7. Prepare the final combined document:
+       - Integrate the initial research and case study into a single document
+       - Ensure all sections are properly formatted and citations are consistent throughout
+       - Append the unified reference list to the end of the document
+    8. Conduct a final review:
+       - Double-check that all in-text citations are present in the reference list and vice versa
+       - Verify that the reference list is in proper alphabetical order
+       - Ensure consistent formatting throughout the entire document
+    9. Prepare the output for the Main Researcher:
+       - Compile the combined research document (initial research + case study)
+       - Include the unified, properly formatted reference list
+
+main_research_task:
+  description: |
+    Expand and deepen the research on {topic}, building upon the work of the Initial Researcher, ensuring proper APA 7th edition citations throughout.
+    1. Review the partially completed Research model as given by the Initial Researcher, noting existing citations and identifying areas requiring additional sources.
+    2. Review the CaseStudy model as given by the Case Study Specialist, and use that to guide your plan on how to further improve the partially completed Research model, but DO NOT change the Case Study.
+    3. Complete all remaining sections of the main body, ensuring:
+       - In-depth exploration of each main point with appropriate in-text citations (e.g., Johnson, 2022)
+       - Integration of supporting evidence and examples, citing primary sources (Smith et al., 2021)
+       - Discussion of any counterarguments or limitations, referencing relevant critical perspectives (e.g., Brown, 2023; Lee, 2022)
+       - Logical flow and connections between sections, using transitional phrases and citing connecting ideas (Wilson, 2020)
+    4. Conduct advanced analysis and synthesis of the gathered information:
+       - Identify overarching themes or patterns, citing multiple sources that support each theme (e.g., Davis, 2021; Thompson, 2022; Harris, 2023)
+       - Draw connections between different studies or viewpoints, using appropriate citations to highlight relationships or contradictions
+       - Evaluate the strength and relevance of different pieces of evidence, citing methodological sources to support your evaluation (e.g., according to the criteria outlined by Jackson (2022)...)
+    5. Develop a comprehensive conclusion that:
+       - Summarizes key findings effectively, referencing the most significant sources
+       - Discusses the broader implications of the research, citing relevant theoretical frameworks (e.g., as proposed by Green (2021)...)
+       - Suggests meaningful directions for future research, citing any existing calls for research or gaps identified in the literature
+    6. Ensure all claims are well-supported by credible sources, with an in-text citation for each significant piece of information or argument.
+    7. Incorporate appropriate methodologies or theoretical frameworks, citing foundational works and recent developments in these approaches.
+    8. Refine and expand the reference list:
+       - Ensure all in-text citations have a corresponding entry in the reference list
+       - Check that all entries in the reference list are cited in the text
+       - Verify that all citations are relevant, recent (where appropriate), and from reputable sources
+       - Format all references according to APA 7th edition guidelines
+    9. Review the entire document for coherence, making sure later sections align with and build upon earlier ones, maintaining consistent citation practices throughout.
+    10. Conduct a final citation check:
+       - Verify that every assertion, statistic, or significant idea has an appropriate in-text citation
+       - Ensure all direct quotes are properly formatted and cited with page numbers (or paragraph numbers for non-paginated sources)
+       - Check for consistency in the formatting of in-text citations (e.g., et al. usage, ampersands, year formatting)
+
+peer_review_task:
+  description: |
+    Conduct a rigorous peer review of the completed research on {topic}, simulating the critical evaluation process of academic peer review.
+    1. Thoroughly read and analyze the entire research document.
+    2. Evaluate the strengths of the research, considering:
+       - Clarity and coherence of argumentation
+       - Depth and breadth of analysis
+       - Originality and significance of insights
+       - Appropriateness and application of methodology
+       - Quality and relevance of sources used
+    3. Identify weaknesses or areas for improvement, such as:
+       - Gaps in logic or argumentation
+       - Insufficient support for key claims
+       - Potential biases or oversights
+       - Clarity of expression or structure
+       - Incomplete consideration of alternative viewpoints
+    4. Provide specific, constructive suggestions for addressing each identified weakness.
+    5. Assess the overall contribution of the research to the field, considering:
+       - Novelty of findings or approach
+       - Potential impact on theory or practice
+       - Relevance to current debates or issues in the field
+    6. Evaluate the proper use and formatting of citations and references.
+    7. Comment on the effective use (or potential use) of visual aids, if applicable.
+    8. Provide an overall assessment that balances critique with recognition of the work's merits.
+
+final_edit_task:
+  description: |
+    Refine and finalize the research document on {topic}, incorporating peer review feedback and ensuring the highest standards of academic quality.
+    1. Carefully review the completed Research model and the PeerReviewFeedback.
+    2. Address each point of feedback methodically:
+       - Implement suggested improvements where appropriate
+       - Justify and document any decisions not to implement certain suggestions
+    3. Enhance the overall structure and flow of the document:
+       - Ensure logical progression of ideas within and between sections
+       - Improve transitions for smoother reading experience
+       - Verify that the conclusion effectively ties back to the introduction and research questions
+    4. Refine the language and style:
+       - Ensure clarity and precision in expression
+       - Eliminate jargon or overly complex language where possible
+       - Maintain a consistent academic tone throughout
+    5. Verify the accuracy and completeness of all factual information.
+    6. Review and update all references:
+       - Ensure all in-text citations are present and correctly formatted
+       - Check the reference list for completeness and correct formatting
+       - Verify that all urls in digital references are active and correct
+    7. Conduct a final proofread for any grammatical, spelling, or formatting errors.
+    8. Verify compliance with any specific style guidelines (e.g., APA, MLA) as required.
+    9. Ensure the abstract accurately reflects the final content of the paper.
+    10. Ensure proper APA citation in-text is done.

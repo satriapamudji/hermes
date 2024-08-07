@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "hermes"
+version = "0.1.0"
+description = "Hermes: A research assistant using CrewAI and Telegram"
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.11,<=3.13"
+crewai = { extras = ["tools"], version = "^0.41.1" }
+telethon = "^1.36.0"
+reportlab = "^4.2.2"
+crewai-tools = "^0.4.26"
+python-dotenv = "^1.0.1"
+deepgram-sdk = "^3.3.1"
+openai = "^1.37.0"
+pydub = "^0.25.1"
+PyPDF2 = "^3.0.1"
+python-pptx = "^0.6.23"
+python-docx = "^0.8.11"
+pdfplumber = "^0.11.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
