@@ -61,7 +61,7 @@ Initially, I considered building a web app, but I realized that Telegram would b
 | -------------------------------------  | ------------------------------------------------------------- |
 | 🎧 **Audio summarization**            | Convert lengthy audio into concise summaries.                  |
 | 📄 **Text summarization**              | Digest large volumes of text easily.                          |
-| 📜 **Research (Function)**             | Conduct research on a specific topic. An example of the research output can be found [here](https://github.com/satriapamudji/hermes/blob/main/example_research.pdf)                       |
+| 📜 **Research (Function)**             | Conduct research on a specific topic. An example of the research output can be found [here](https://github.com/satriapamudji/hermes/blob/main/example_research.pdf).                       |
 
 ### Planned Features
 
