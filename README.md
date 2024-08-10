@@ -1,16 +1,20 @@
-# Hermes
+## Hermes
 
-Hermes is a Telegram bot that can summarize audio, text, and conduct research.
+GM.
 
-## Features
+With back-to-school szn in full swing next week, I decided to build Hermes — a Telegram bot designed to accelerate the learning process.
 
-- Audio summarization
-- Text summarization
-- Research assistant
+Initially, I considered building a web app, but I realized that Telegram would be a more accessible platform for quick interactions. Hermes is still in its early stages (since I actually have to test this out throughtout this new semester), but I hope it will make learning more efficient.
 
-## Setup
+### How Hermes Works
 
-1. Install Poetry:
+- Audio summarization: Uses Deepgram for transcription, OpenAI for summarization
+- Text summarization: Uses OpenAI for summarization
+- Research: Utilizes [CrewAI](https://www.crewai.com/) due to the complexity of the task. The configuration for different "agents" is in ```src/crew_utils/crew.py```.
+
+## Getting Started
+
+1. Install Poetry (If you don't have Poetry yet):
    ```
    curl -sSL https://install.python-poetry.org | python3 -
    ```
@@ -49,22 +53,24 @@ Hermes is a Telegram bot that can summarize audio, text, and conduct research.
    poetry run python main.py
    ```
 
-## How It Works
+## Features and Bugs
 
-- Audio summarization: Uses Deepgram + OpenAI
-- Text summarization: Powered by OpenAI
-- Research: Utilizes CrewAI
+### Current Features
 
-## Development
+| Features                                       | Description                                                              |
+| -------------------------------------  | ------------------------------------------------------------- |
+| 🎧 **Audio summarization**            | Convert lengthy audio into concise summaries.                  |
+| 📄 **Text summarization**              | Digest large volumes of text easily.                          |
+| 📜 **Research (Function)**             | Conduct research on a specific topic. An example of the research output can be found [here](https://github.com/satriapamudji/hermes/blob/main/example_research.pdf)                       |
 
-Activate the virtual environment:
-```
-poetry shell
-```
+### Planned Features
 
-Add new dependencies:
-```
-poetry add package-name
-```
+| Features                                       | Description                                                             |
+| -------------------------------------  | ------------------------------------------------------------------------------  |
+| 🗃️ **Text to Anki**                   | Turn any given text into an Anki flashcard list.                                 |
+| 🙋🏻‍♂️ **Learn (Function)**               | Quickly learn any subject matter. A more mild version of Research.               |
+| ❓ **Text to Questions**               | Generate a questionnaire to practice based on a given text.                      |
 
-Enjoy using Hermes!
+### Current Known Bugs
+
+- **Text Summarization**: Inability to read some PDFs 
