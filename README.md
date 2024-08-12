@@ -60,6 +60,7 @@ Initially, I considered building a web app, but I realized that Telegram would b
 | 🎧 **Audio (Summary)**            | Convert lengthy audio into concise summaries.                  |
 | 📄 **Text (Summary)**              | Digest large volumes of text easily.                          |
 | 📜 **Research (Function)**             | Conduct research on a specific topic. An example of the research output can be found [here](https://github.com/satriapamudji/hermes/blob/main/example_research.pdf).                       |
+| 📄 **Canvas Support**              | View your Canvas (LMS) classes & download files quickly.                          |
 
 ### Planned Features
 
