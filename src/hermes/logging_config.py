@@ -14,7 +14,7 @@ def setup_logging():
             'file': {
                 'level': 'INFO',
                 'class': 'logging.FileHandler',
-                'filename': 'application.log',
+                'filename': 'hermes.log',
                 'formatter': 'standard',
             },
             'console': {
