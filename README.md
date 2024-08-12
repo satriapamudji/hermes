@@ -44,6 +44,10 @@ Initially, I considered building a web app, but I realized that Telegram would b
    TELEGRAM_API_ID=
    TELEGRAM_API_HASH=
    TELEGRAM_BOT_TOKEN=
+
+   # Canvas API
+   CANVAS_API_URL= 
+   CANVAS_ACCESS_TOKEN=
    ```
 
 5. Run the project:
