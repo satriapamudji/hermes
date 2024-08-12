@@ -25,3 +25,4 @@ Thumbs.db
 # Other stuff
 bot.session
 *.session
+*.session-journal

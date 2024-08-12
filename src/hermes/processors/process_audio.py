@@ -1,17 +1,14 @@
 import os
 import json
-import logging
 import tempfile
 from openai import OpenAI
 
 from config.settings import OPENAI_API_KEY, OPENAI_MODEL
+from config.bot_instance import client
 from .pdf_summarizer import generate_summarize_pdf
-from utils.helpers import read_json_file, read_text_file
-from utils.helpers_process_audio import download_file_with_progress, split_audio, process_audio_chunk
-
-# Set up logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
+from utils.helper_text import read_json_file, read_text_file
+from utils.helper_audio import download_audio, split_audio, process_audio_chunk
+from logging_config import logger
 
 # Set up OpenAI client
 openai_client = OpenAI(api_key=OPENAI_API_KEY)
@@ -20,43 +17,41 @@ openai_client = OpenAI(api_key=OPENAI_API_KEY)
 sample_summary_json = read_json_file('sample_summary.json')
 sample_transcript = read_text_file('sample_transcript.txt')
 
-async def process_audio(event, client, user_state):
-    user_id = event.sender_id
-    message_id = event.message.id
-    timestamp = event.message.date
-
-    logger.info(f"{timestamp} - Processing audio for user {user_id} with message ID {message_id}.")
+async def process_audio(event, user_state):
+    local_filename = None
+    audio_chunks = []
+    pdf_filename = None
 
     try:
+        logger.info(f"User {event.sender_id} initiated audio processing.")
         filename = user_state.filename
         file = user_state.file
         progress_message = await event.reply("Starting to process your audio file...")
-        logger.info(f"{timestamp} - User {user_id} provided filename: {filename}")
 
         # Start the download process
         with tempfile.NamedTemporaryFile(delete=False, suffix='.audio') as temp_file:
             local_filename = temp_file.name
 
-        logger.info(f"{timestamp} - Started download for user {user_id}. Temporary file created at {local_filename}.")
+        download_success = await download_audio(client, progress_message, file.media, local_filename)
+        logger.info(f"Audio file downloaded to {local_filename} for user {event.sender_id}.")
 
-        await download_file_with_progress(client, progress_message, file.media, local_filename)
-
-        logger.info(f"{timestamp} - Download complete for user {user_id}. File saved at {local_filename}.")
+        if not download_success:
+            raise Exception("Download failed. Please try uploading the file again.")
 
         # Split the audio file if it's too large
         await progress_message.edit("Splitting the audio file...")
         audio_chunks, total_chunks = await split_audio(local_filename, progress_message)
-        
-        logger.info(f"{timestamp} - Audio file split into {total_chunks} chunks for user {user_id}. Starting transcription...")
+        logger.info(f"Audio file split into {total_chunks} chunks for user {event.sender_id}.")
 
         full_transcript = ""
+
         for i, chunk_path in enumerate(audio_chunks):
             await progress_message.edit(f"Transcribing audio chunk {i+1}/{total_chunks}...")
             chunk_transcript = process_audio_chunk(chunk_path)
             full_transcript += chunk_transcript + " "
-            logger.info(f"{timestamp} - Processed audio chunk {i+1}/{total_chunks} for user {user_id}")
+            logger.info(f"Transcribed chunk {i+1}/{total_chunks} for user {event.sender_id}.")
+
         await progress_message.edit("Transcription finished. Generating summary...")
-        logger.info(f"{timestamp} - Transcription completed for user {user_id}. Generating summary...")
 
         # Summarize using OpenAI
         messages = [
@@ -153,48 +148,54 @@ async def process_audio(event, client, user_state):
             }
         ]
         
-        logger.info(f"{timestamp} - Starting summarization for user {user_id}")
         completion = openai_client.chat.completions.create(
             model=OPENAI_MODEL,
             temperature=0.3,
             seed=555,
             messages=messages
         )
+        logger.info(f"OpenAI API call successful for user {event.sender_id}.")
         
         content = completion.choices[0].message.content
         json_content = content.strip('`').replace('json\n', '', 1) if content.startswith('```json') else content
         
         try:
             summary_data = json.loads(json_content)
+            logger.info(f"Summary successfully parsed into JSON for user {event.sender_id}.")
         except json.JSONDecodeError as json_error:
-            logger.error(f"{timestamp} - JSON parsing error for user {user_id}: {str(json_error)}")
-            logger.error(f"{timestamp} - Problematic content: {json_content}")
-            raise ValueError("The API response was not in valid JSON format. Please try again.")
+            logger.error(f"JSONDecodeError while parsing summary for user {event.sender_id}: {str(json_error)}", exc_info=True)
+            raise ValueError(f"There was an issue with the summary format: {json_error.msg}. Please try again.")
 
         await progress_message.edit("Summary generated. Creating PDF...")
 
         # Generate PDF
-        pdf_filename = generate_summarize_pdf(filename, full_transcript, summary_data, is_audio=True)
-        logger.info(f"{timestamp} - PDF generated: {pdf_filename}")
+        try:
+            pdf_filename = generate_summarize_pdf(filename, full_transcript, summary_data, is_audio=True)
+            logger.info(f"PDF generated for user {event.sender_id} with filename {pdf_filename}.")
+        except Exception as pdf_error:
+            logger.error(f"Error during PDF generation for user {event.sender_id}: {str(pdf_error)}", exc_info=True)
+            raise RuntimeError(f"An error occurred while creating the PDF summary: {str(pdf_error)}. Please try again.")
 
         # Send the PDF
         await client.send_file(event.chat_id, pdf_filename, caption=f"Here's the summary of {filename}")
-
         await progress_message.edit("Processing complete!")
+        logger.info(f"Summary PDF sent to user {event.sender_id}.")
 
     except Exception as e:
-        logger.error(f"{timestamp} - An error occurred for user {user_id}: {str(e)}", exc_info=True)
-        await event.reply("I'm sorry, an error occurred while processing your audio.")
+        logger.error(f"Unexpected error occurred while processing audio for user {event.sender_id}: {str(e)}", exc_info=True)
+        await event.reply(f"I'm sorry, an error occurred while processing your audio.\n\n{str(e)}")
 
     finally:
         # Clean up
-        if 'local_filename' in locals() and os.path.exists(local_filename):
+        if local_filename and os.path.exists(local_filename):
             os.remove(local_filename)
-        if 'audio_chunks' in locals():
-            for chunk in audio_chunks:
-                if os.path.exists(chunk):
-                    os.remove(chunk)
-        if 'pdf_filename' in locals() and os.path.exists(pdf_filename):
+            logger.info(f"Temporary audio file {local_filename} deleted after processing for user {event.sender_id}.")
+        for chunk in audio_chunks:
+            if os.path.exists(chunk):
+                os.remove(chunk)
+                logger.info(f"Temporary audio chunk {chunk} deleted after processing for user {event.sender_id}.")
+        if pdf_filename and os.path.exists(pdf_filename):
             os.remove(pdf_filename)
+            logger.info(f"Temporary PDF file {pdf_filename} deleted after processing for user {event.sender_id}.")
         user_state.reset()
-        logger.info(f"Audio processing complete for user {user_id}. State reset to IDLE.")
+        logger.info(f"User state reset for user {event.sender_id} after processing.")

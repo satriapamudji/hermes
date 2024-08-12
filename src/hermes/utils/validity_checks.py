@@ -1,60 +1,55 @@
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeFilename
+from logging_config import logger
 
-def is_valid_audio_file(message, logger):
-    timestamp = message.date
-    message_id = message.id
-    user_id = message.sender_id
+def is_valid_audio_file(message):
+    """
+    Check if the message contains a valid audio file.
+    
+    :param message: The Telegram message object
+    :return: Boolean indicating if the file is a valid audio file
+    """
+    if message.audio:
+        logger.info("Message contains a valid audio file.")
+        return True
 
-    try:
-        is_audio = False
-
-        if message.audio:
-            is_audio = True
-            logger.info(f"{timestamp} - Message {message_id} from user {user_id} contains audio.")
-        elif message.document:
-            attributes = message.document.attributes
-            is_audio = any(isinstance(attr, DocumentAttributeAudio) for attr in attributes)
-            logger.info(f"{timestamp} - Checking document attributes for audio: {attributes}")
-
-            if not is_audio:
-                filename_attr = next((attr for attr in attributes if isinstance(attr, DocumentAttributeFilename)), None)
-                if filename_attr:
-                    audio_extensions = ['.mp3', '.wav', '.ogg', '.m4a', '.aac', '.flac']
-                    is_audio = any(filename_attr.file_name.lower().endswith(ext) for ext in audio_extensions)
-                    logger.info(f"{timestamp} - Checking filename for audio extensions: {filename_attr.file_name}")
-
-        if is_audio:
-            logger.info(f"{timestamp} - User {user_id} uploaded a valid audio file.")
-        else:
-            logger.info(f"{timestamp} - Message {message_id} from user {user_id} does not contain valid audio.")
-
-        return is_audio
-    except Exception as e:
-        logger.error(f"{timestamp} - An error occurred for user {user_id}: {str(e)}", exc_info=True)
+    if not message.document:
+        logger.warning("Message does not contain a document.")
         return False
 
-def is_valid_text_file(message, logger):
-    timestamp = message.date
-    message_id = message.id
-    user_id = message.sender_id
+    audio_extensions = {'.mp3', '.wav', '.ogg', '.m4a', '.aac', '.flac'}
 
     try:
-        is_valid = False
+        for attr in message.document.attributes:
+            if isinstance(attr, DocumentAttributeAudio):
+                logger.info("Message document is a valid audio file.")
+                return True
+            if isinstance(attr, DocumentAttributeFilename):
+                if any(attr.file_name.lower().endswith(ext) for ext in audio_extensions):
+                    logger.info(f"Message document filename {attr.file_name} is a valid audio file.")
+                    return True
+    except AttributeError as e:
+        logger.error("AttributeError encountered while checking audio file validity.", exc_info=True)
+    return False
 
-        if message.document:
-            attributes = message.document.attributes
-            filename_attr = next((attr for attr in attributes if isinstance(attr, DocumentAttributeFilename)), None)
-            if filename_attr:
-                valid_extensions = ['.pdf', '.docx', '.txt', '.pptx']
-                is_valid = any(filename_attr.file_name.lower().endswith(ext) for ext in valid_extensions)
-                logger.info(f"{timestamp} - Checking filename for valid extensions: {filename_attr.file_name}")
-
-        if is_valid:
-            logger.info(f"{timestamp} - User {user_id} uploaded a valid text file.")
-        else:
-            logger.info(f"{timestamp} - Message {message_id} from user {user_id} does not contain a valid text file.")
-
-        return is_valid
-    except Exception as e:
-        logger.error(f"{timestamp} - An error occurred for user {user_id}: {str(e)}", exc_info=True)
+def is_valid_text_file(message):
+    """
+    Check if the attached document is a valid text file based on its extension.
+    
+    :param message: The Telegram message object
+    :return: Boolean indicating if the file is a valid text file
+    """
+    if not message.document:
+        logger.warning("Message does not contain a document.")
         return False
+
+    valid_extensions = {'.pdf', '.docx', '.txt', '.pptx'}
+
+    try:
+        for attr in message.document.attributes:
+            if isinstance(attr, DocumentAttributeFilename):
+                if any(attr.file_name.lower().endswith(ext) for ext in valid_extensions):
+                    logger.info(f"Message document filename {attr.file_name} is a valid text file.")
+                    return True
+    except AttributeError as e:
+        logger.error("AttributeError encountered while checking text file validity.", exc_info=True)
+    return False

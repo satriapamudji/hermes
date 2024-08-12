@@ -11,13 +11,14 @@ class BotState(Enum):
     TASK_COMPLETED = auto()
 
 class UserStateMachine:
+
     def __init__(self):
         self.state = BotState.IDLE
         self.filename = None
         self.file = None
         self.text_files = []
         self.research_topic = None
-    
+
     def set_task_completed(self):
         self.state = BotState.TASK_COMPLETED
 
@@ -27,7 +28,7 @@ class UserStateMachine:
             return "Please provide a name for your file (without extension and without '/' at the start)."
         else:
             return self._busy_message()
-    
+
     def start_text_summarize(self):
         if self.state == BotState.IDLE:
             self.state = BotState.AWAITING_TEXT_FILENAME
@@ -58,7 +59,7 @@ class UserStateMachine:
             return f"Great! I've noted the filename as '{filename}'. Now, please send me the text documents (PDF, Word, or TXT) you want to summarize. You can send multiple files. When you're done, send /done."
         else:
             return "I'm not expecting a filename at this time. Please use the /summarize_text command to start the process."
-    
+
     def set_audio_file(self, file):
         if self.state == BotState.AWAITING_AUDIO_FILE:
             self.file = file
@@ -82,7 +83,7 @@ class UserStateMachine:
             return "You haven't sent any files yet. Please send at least one file before using /done."
         else:
             return "I'm not expecting the /done command at this time."
-    
+
     def get_state(self):
         return self.state
 
@@ -94,7 +95,7 @@ class UserStateMachine:
         previous_state = self.state
         self.reset()
         return f"Cancelled the current task. You can start a new task now."
-    
+
     def reset(self):
         self.state = BotState.IDLE
         self.filename = None

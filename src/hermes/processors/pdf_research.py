@@ -1,14 +1,3 @@
-import logging
-
-# Set up logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    filename='research_bot.log',
-    filemode='a'
-)
-logger = logging.getLogger(__name__)
-
 def generate_research_pdf(filename, research_data):
     import re
     import html
@@ -29,9 +18,9 @@ def generate_research_pdf(filename, research_data):
     styles['Title'].spaceAfter = 12
     styles['Title'].alignment = 1
     styles['Heading1'].fontSize = 20
-    styles['Heading1'].spaceAfter = 16  # Reduced from 16
+    styles['Heading1'].spaceAfter = 16
     styles['Heading2'].fontSize = 16
-    styles['Heading2'].spaceAfter = 10  # Reduced from 12
+    styles['Heading2'].spaceAfter = 10
     styles['Heading3'].fontSize = 14
     styles['Heading3'].spaceAfter = 6
     
@@ -41,13 +30,12 @@ def generate_research_pdf(filename, research_data):
     styles.add(ParagraphStyle(name='NumberedSubheading', 
                               fontSize=12, 
                               fontName='Helvetica-Bold',
-                              spaceAfter=6,  # Reduced from 10
-                              spaceBefore=3))  # Reduced from 4
+                              spaceAfter=6,
+                              spaceBefore=3))
 
     def process_main_points(main_points, main_points_context, main_subpoints_body, content_list):
         def remove_numbering(text):
-            # This regex matches numbers (with or without decimal points) at the start of the string,
-            # optionally followed by a period and a space
+            # This regex matches numbers (with or without decimal points) at the start of the string, optionally followed by a period and a space.
             return re.sub(r'^[\d.]+\.?\s*', '', text)
 
         for i, (x, subpoints) in enumerate(main_points.items(), start=1):
@@ -189,14 +177,11 @@ def generate_research_pdf(filename, research_data):
             content_list.append(Paragraph("References data is in an unexpected format", styles['Normal']))
 
     except Exception as e:
-        logger.error(f"Error generating PDF content: {str(e)}", exc_info=True)
         content_list.append(Paragraph("An error occurred while generating the PDF. Please check the log for details.", styles['Normal']))
 
     try:
         doc.build(content_list)
-        logger.info(f"PDF generated successfully: {pdf_filename}")
     except Exception as e:
-        logger.error(f"Error building PDF: {str(e)}", exc_info=True)
         raise
 
     return pdf_filename

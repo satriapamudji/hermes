@@ -2,7 +2,7 @@
 name = "hermes"
 version = "0.1.0"
 description = "Hermes: A research assistant using CrewAI and Telegram"
-authors = ["Your Name <you@example.com>"]
+authors = ["Satria Pamudji <s.pamudji01@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
@@ -16,6 +16,7 @@ deepgram-sdk = "^3.3.1"
 openai = "^1.37.0"
 pydub = "^0.25.1"
 PyPDF2 = "^3.0.1"
+aiohttp = "^3.8.1"
 python-pptx = "^0.6.23"
 python-docx = "^0.8.11"
 pdfplumber = "^0.11.2"

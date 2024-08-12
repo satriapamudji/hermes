@@ -4,7 +4,7 @@ from difflib import SequenceMatcher
 
 def find_best_match(search_text, content, is_audio=True, threshold=0.6):
     """Find the best matching substring in either a single transcript or across multiple documents."""
-    search_text = search_text.strip().strip('.').strip()  # Clean search text
+    search_text = search_text.strip().strip('.').strip()
     best_ratio = 0
     best_match = ""
     best_index = -1
@@ -48,7 +48,6 @@ def escape_html_like(text):
     """
     Escape HTML-like content in the text while preserving ReportLab's formatting tags and handling nested tags.
     """
-    # Define the tags we want to preserve
     preserved_tags = ['b', 'i', 'u', 'super', 'sub', 'a', 'font', 'para']
     
     # Function to replace matched tags with placeholders

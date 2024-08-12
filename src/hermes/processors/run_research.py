@@ -14,7 +14,7 @@ async def run_research(topic):
     }
     
     try:
-        # Run the CrewAI research in a separate thread to avoid blocking the event loop
+        # Run the CrewAI research in a separate thread
         loop = asyncio.get_event_loop()
         crew = ResearchCrew().crew()
         await loop.run_in_executor(None, crew.kickoff, inputs)
@@ -27,10 +27,8 @@ async def run_research(topic):
         return pdf_filename
     
     except (FileNotFoundError, json.JSONDecodeError, Exception) as e:
-        # Handle all exceptions in a single block
         raise
     
     finally:
-        # Ensure final_research.json is removed even if an error occurs
         if os.path.exists('final_research.json'):
             os.remove('final_research.json')
