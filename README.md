@@ -50,11 +50,16 @@ Initially, I considered building a web app, but I realized that Telegram would b
    CANVAS_ACCESS_TOKEN=
    ```
 
-5. Run the project:
+5. Go into the src directory:
+   ```
+   cd src/hermes
+   ```
+
+6. Run the project:
    ```
    poetry run python main.py
    ```
-
+   
 ## Features and Bugs
 
 ### Current Features
