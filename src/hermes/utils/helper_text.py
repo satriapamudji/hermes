@@ -8,14 +8,17 @@ from pptx import Presentation
 from telethon.tl.types import DocumentAttributeFilename
 from logging_config import logger
 
+def get_project_root():
+    return os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+
 def read_json_file(file_name):
-    file_path = os.path.join('data', file_name)
+    file_path = os.path.join(get_project_root(), 'data', file_name)
     logger.info(f"Reading JSON file from {file_path}")
     with open(file_path, 'r', encoding='utf-8') as file:
         return json.load(file)
 
 def read_text_file(file_name):
-    file_path = os.path.join('data', file_name)
+    file_path = os.path.join(get_project_root(), 'data', file_name)
     logger.info(f"Reading text file from {file_path}")
     with open(file_path, 'r', encoding='utf-8') as file:
         return file.read()
