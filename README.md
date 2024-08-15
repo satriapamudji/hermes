@@ -115,13 +115,13 @@ You can find an example `.env` file [here](https://github.com/satriapamudji/herm
 
 ### 6. Navigate to the Source Directory
 
-```bash
+```
 cd src/hermes
 ```
 
 ### 7. Run the Project
 
-```bash
+```
 poetry run python main.py
 ```
 
