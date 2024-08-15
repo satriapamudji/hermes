@@ -5,6 +5,7 @@ from config.bot_instance import client
 from utils.handler_decorator import handler_collector
 import utils.handler_telegram
 
+
 def register_handlers(client):
     try:
         for event_type, handler in handler_collector.handlers:
@@ -13,6 +14,7 @@ def register_handlers(client):
     except Exception as e:
         logger.error("Failed to register handlers.", exc_info=True)
         raise
+
 
 async def main():
     try:

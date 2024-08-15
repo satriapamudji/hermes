@@ -16,3 +16,5 @@ OPENAI_MODEL = os.getenv('OPENAI_MODEL_NAME')
 SERPER_API_KEY = os.getenv("SERPER_API_KEY")
 CANVAS_API_URL = os.getenv('CANVAS_API_URL', 'https://canvas.instructure.com/api/v1')
 CANVAS_ACCESS_TOKEN = os.getenv('CANVAS_ACCESS_TOKEN')
+APPROVED_USERS = [int(user_id) for user_id in os.getenv('APPROVED_USERS', '').split(',') if user_id]
+
